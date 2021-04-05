@@ -21,7 +21,13 @@ class ShakeViewController: UIViewController {
     @IBOutlet weak var shakeLabel: UILabel!
     var shakeCount : Int = 0
     
-    // Add your motionEnded function here
+    // Added: Add your motionEnded function here:
+    override func motionEnded(_ motion: UIEvent.EventSubtype,
+          with event: UIEvent?) {
+        print(motion)
+        print("shake gesture has ended")
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

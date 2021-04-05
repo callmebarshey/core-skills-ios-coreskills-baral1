@@ -43,7 +43,7 @@ class FirebaseViewController: UIViewController {
         
         // Task: assign course information contained in the user input
         // to a variable you define
-        _ = String(inputArray[1])
+        let course = String(inputArray[1])
 
         // Create the databsed collection corresponding to the
         // department information provided. The database named db is created in

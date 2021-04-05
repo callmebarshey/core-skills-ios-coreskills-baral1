@@ -51,12 +51,37 @@ class WebServiceViewController: UIViewController {
         
         // Task: assign course information contained in the user input
         // to a variable you define
-        _ = String(inputArray[1])
+        let course = String(inputArray[1])
 
         // Task: Create the url string to access a course information in the database
         // using the provided department and course information
         
+        extension course {
+            private let urlComponents: URLComponents // base URL components of the web service
+            private let session: URLSession // shared session for interacting with the web service
 
+            static func restaurants(matching query: String, completion: ([course]) -> Void) {
+                var searchURLComponents = urlComponents
+                searchURLComponents.path = "/search"
+                searchURLComponents.queryItems = [URLQueryItem(name: "q", value: query)]
+                let searchURL = searchURLComponents.url!
+
+                session.dataTask(url: searchURL, completion: { (_, _, data, _)
+                    var restaurants: [course] = []
+
+                    if let data = data,
+                        let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        for case let result in json["results"] {
+                            if let restaurant = course(json: result) {
+                                restaurants.append(course)
+                            }
+                        }
+                    }
+
+                    completion(course)
+                }).resume()
+            }
+        }
         
         // Tasks: set up the URL request using the url string from the above step
         // Create a URLSession and create the data task to handle the response from the API.
